@@ -1,20 +1,47 @@
 import { ClipboardText } from "phosphor-react";
-import { Task } from './Task';
+import { Task } from "./Task";
+import { Task as ITask } from "../App";
 import styles from "./TaskList.module.css";
+import { useMemo } from "react";
 
-export function TaskList() {
-  const isTaskArrayEmpty = false;
+interface TaskListProps {
+  tasks: ITask[];
+  handleUpdateTasks: (updatedTasks: ITask[]) => void;
+}
+
+export function TaskList({ tasks, handleUpdateTasks }: TaskListProps) {
+  const isTaskArrayEmpty = tasks.length === 0;
+
+  const finishedTasks = useMemo(() => {
+    return tasks.filter((task) => task.isFinished);
+  }, [tasks]);
+
+  function handleToggleTask(taskId: string) {
+    const newTasks = tasks.map((task) => {
+      return task.id === taskId
+        ? { ...task, isFinished: !task.isFinished }
+        : task;
+    });
+    handleUpdateTasks(newTasks);
+  }
+
+  function handleDeleteTask(taskId: string) {
+    const newTasks = tasks.filter((task) => task.id !== taskId);
+    handleUpdateTasks(newTasks);
+  }
 
   return (
     <div className={styles.taskList}>
       <header>
         <div className={styles.createdTasks}>
           <strong>Tarefas criadas</strong>
-          <span>5</span>
+          <span>{tasks.length}</span>
         </div>
         <div className={styles.finishedTasks}>
           <strong>Concluídas</strong>
-          <span>2 de 5</span>
+          <span>
+            {finishedTasks.length} de {tasks.length}
+          </span>
         </div>
       </header>
 
@@ -27,10 +54,16 @@ export function TaskList() {
           </div>
         ) : (
           <div className={styles.filledList}>
-            <Task />
-            <Task />
-            <Task />
-            <Task />
+            {tasks.map((task) => (
+              <Task
+                key={task.id}
+                id={task.id}
+                description={task.description}
+                isFinished={task.isFinished}
+                onCheck={handleToggleTask}
+                onDelete={handleDeleteTask}
+              />
+            ))}
           </div>
         )}
       </main>

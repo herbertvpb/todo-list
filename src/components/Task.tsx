@@ -3,21 +3,28 @@ import { useState } from "react";
 import { Checkbox } from "./Checkbox";
 import styles from "./Task.module.css";
 
-export function Task() {
-  const [checked, setChecked] = useState(false);
+interface TaskProps {
+  id: string;
+  description: string;
+  isFinished: boolean;
+  onCheck: (id: string) => void;
+  onDelete: (id: string) => void;
+}
 
+export function Task({ id: taskId, description, isFinished, onCheck, onDelete }: TaskProps) {
   function handleToggleCheckbox() {
-    setChecked((state) => !state);
+    onCheck(taskId)
   }
 
-  const text =
-    "Integer urna interdum massa libero auctor neque turpis turpis semper. Duis vel sed fames integer.";
+  function handleDeleteTask() {
+    onDelete(taskId)
+  }
 
   return (
     <div className={styles.task}>
-      <Checkbox checked={checked} onToggle={handleToggleCheckbox} />
-      {checked ? <s>{text}</s> : <p>{text}</p>}
-      <button>
+      <Checkbox checked={isFinished} onToggle={handleToggleCheckbox} />
+      {isFinished ? <s>{description}</s> : <p>{description}</p>}
+      <button onClick={handleDeleteTask}>
         <Trash weight="bold" />
       </button>
     </div>
