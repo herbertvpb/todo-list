@@ -4,6 +4,7 @@ import styles from "./App.module.css";
 
 import "./global.css";
 import { TaskForm } from './components/TaskForm';
+import { TaskList } from './components/TaskList';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Header />
       <div className={styles.wrapper}>
         <TaskForm />
+        <TaskList />
       </div>
     </div>
   );
