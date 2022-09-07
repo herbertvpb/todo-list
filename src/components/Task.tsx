@@ -18,7 +18,7 @@ export function Task() {
       <Checkbox checked={checked} onToggle={handleToggleCheckbox} />
       {checked ? <s>{text}</s> : <p>{text}</p>}
       <button>
-        <Trash />
+        <Trash weight="bold" />
       </button>
     </div>
   );
