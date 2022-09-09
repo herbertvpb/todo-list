@@ -12,20 +12,24 @@ export function TaskForm({ handleCreateNewTask }: TaskFormProps) {
   function onSubmit(event: FormEvent) {
     event.preventDefault();
     handleCreateNewTask(description);
+    setDescription("");
   }
 
   function handleDescriptionChange(event: ChangeEvent<HTMLInputElement>) {
     setDescription(event.target.value);
   }
 
+  const isDescriptionInputEmpty = !description;
+
   return (
     <form onSubmit={onSubmit} className={styles.taskForm}>
       <input
         type="text"
         placeholder="Adicione uma nova tarefa"
+        value={description}
         onChange={handleDescriptionChange}
       />
-      <button>
+      <button disabled={isDescriptionInputEmpty}>
         Criar
         <PlusCircle size={16} weight="bold" />
       </button>
