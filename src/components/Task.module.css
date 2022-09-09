@@ -9,14 +9,17 @@
   gap: 1rem;
 }
 
-.task s {
-  color: var(--gray-300);
+.descriptionBox {
+  flex: 1;
   font-size: 0.875rem;
 }
 
-.task p {
+.descriptionBox s {
+  color: var(--gray-300);
+}
+
+.descriptionBox p {
   color: var(--gray-100);
-  font-size: 0.875rem;
 }
 
 .task button {

@@ -1,5 +1,4 @@
 import { Trash } from "phosphor-react";
-import { useState } from "react";
 import { Checkbox } from "./Checkbox";
 import styles from "./Task.module.css";
 
@@ -11,19 +10,27 @@ interface TaskProps {
   onDelete: (id: string) => void;
 }
 
-export function Task({ id: taskId, description, isFinished, onCheck, onDelete }: TaskProps) {
+export function Task({
+  id: taskId,
+  description,
+  isFinished,
+  onCheck,
+  onDelete,
+}: TaskProps) {
   function handleToggleCheckbox() {
-    onCheck(taskId)
+    onCheck(taskId);
   }
 
   function handleDeleteTask() {
-    onDelete(taskId)
+    onDelete(taskId);
   }
 
   return (
     <div className={styles.task}>
       <Checkbox checked={isFinished} onToggle={handleToggleCheckbox} />
-      {isFinished ? <s>{description}</s> : <p>{description}</p>}
+      <div className={styles.descriptionBox}>
+        {isFinished ? <s>{description}</s> : <p>{description}</p>}
+      </div>
       <button onClick={handleDeleteTask}>
         <Trash weight="bold" />
       </button>
